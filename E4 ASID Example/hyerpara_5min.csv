@@ -1,0 +1,33 @@
+epoch_type,seed,m,l,step_size,hr,kernel_size_h,kernel_size_w,kernel_shape,num_kernel,pool_size_h,pool_size_w,fcl_size,dropout,optimizer,learning_rate,batch_size,num_epoch
+5min,818,12,19,2,TRUE,3,1,long rec,16,3,3,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,3,1,long rec,16,3,3,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,5,1,long rec,16,3,3,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,5,1,long rec,16,3,3,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,3,3,square,16,3,3,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,3,3,square,16,3,3,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,5,3,long rec,16,3,3,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,5,3,long rec,16,3,3,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,3,1,long rec,16,4,3,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,3,1,long rec,16,4,3,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,5,1,long rec,16,4,3,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,5,1,long rec,16,4,3,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,3,3,square,16,4,3,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,3,3,square,16,4,3,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,5,3,long rec,16,4,3,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,5,3,long rec,16,4,3,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,3,1,long rec,16,3,4,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,3,1,long rec,16,3,4,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,5,1,long rec,16,3,4,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,5,1,long rec,16,3,4,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,3,3,square,16,3,4,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,3,3,square,16,3,4,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,5,3,long rec,16,3,4,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,5,3,long rec,16,3,4,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,3,1,long rec,16,4,4,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,3,1,long rec,16,4,4,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,5,1,long rec,16,4,4,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,5,1,long rec,16,4,4,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,3,3,square,16,4,4,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,3,3,square,16,4,4,32,0.5,adam,0.001,100,150
+5min,818,12,19,2,TRUE,5,3,long rec,16,4,4,32,0.5,adam,0.001,100,150
+5min,7,12,19,2,TRUE,5,3,long rec,16,4,4,32,0.5,adam,0.001,100,150

@@ -1,0 +1,7 @@
+epoch_type,seed,m,l,step_size,hr,kernel_size_h1,kernel_size_w1,kernel_shape1,num_kernel1,pool_size_h1,pool_size_w1,dropout1,kernel_size_h2,kernel_size_w2,kernel_shape2,num_kernel2,pool_size_h2,pool_size_w2,dropout2,fcl_size,optimizer,learning_rate,batch_size,num_epoch
+5min,394,12,19,2,TRUE,5,3,long rec,16,4,3,0.5,1,1,square,16,2,1,0,16,adam,0.01,100,150
+5min,838,12,19,2,TRUE,5,3,long rec,16,4,3,0.5,1,1,square,16,2,1,0,16,adam,0.01,100,150
+5min,394,12,19,2,TRUE,3,1,long rec,16,3,4,0.5,1,1,square,16,2,1,0,16,adam,0.01,100,150
+5min,838,12,19,2,TRUE,3,1,long rec,16,3,4,0.5,1,1,square,16,2,1,0,16,adam,0.01,100,150
+5min,394,12,19,2,TRUE,3,3,square,16,4,3,0.5,1,1,square,16,2,1,0,16,adam,0.01,100,150
+5min,838,12,19,2,TRUE,3,3,square,16,4,3,0.5,1,1,square,16,2,1,0,16,adam,0.01,100,150

@@ -1,4 +1,4 @@
-####################### Test
+####################### Test process of the ASID Workflow
 ################################################### build the best cnn 
 i = 1  # best config_idx, no need to specify, since hyper_star only has one row
 

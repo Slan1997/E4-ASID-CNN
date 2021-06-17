@@ -1,4 +1,4 @@
-### Generate 1-layer CNN configuration table for 5min epoch data w/o HR (D-5min-w.o.HR).
+### Generate 1-layer CNN configuration table for 5min epoch data w HR (D-5min-w.HR).
 # For simplicity, hyperparameters combinations used in this example are much less than
 # those used in real experiment.
 

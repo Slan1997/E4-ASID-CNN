@@ -1,7 +1,7 @@
 ################################ Training: Find the best configuration across CNN layers.
 ################### 1-layer CNN
 
-## Generate 1-layer CNN configuration table for 5min epoch data w/o HR (D-5min-w.o.HR).
+## Generate 1-layer CNN configuration table for 5min epoch data w/ HR (D-5min-w.HR).
 source("generate_config_table.R")
 
 # metric table should have the same shape as hyperparameter table
@@ -138,7 +138,7 @@ metric_tb %>% write_csv(paste0("metric_",epoch_type[epo],".csv"))
 ######################################################################
 
 ################### 2-layer CNN
-## Generate 2-layer CNN configuration table for 5min epoch data w/o HR (D-5min-w.o.HR).
+## Generate 2-layer CNN configuration table for 5min epoch data w/ HR (D-5min-w.HR).
 source("generate_config_table_layer2.R")
 hyper2
 

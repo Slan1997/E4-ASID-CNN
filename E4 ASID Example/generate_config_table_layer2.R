@@ -1,4 +1,4 @@
-## Generate 2-layer CNN configuration table for 5min epoch data w/o HR (D-5min-w.o.HR).
+## Generate 2-layer CNN configuration table for 5min epoch data w/ HR (D-5min-w.HR).
 
 ## use mean across seed to decide the best 4 configs from layer1 and pass them to layer 2
 mean_config_tb = train_result_tb(metric_tb,hyper,l=1,num_seed)$best_configs

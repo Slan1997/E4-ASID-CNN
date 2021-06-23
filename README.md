@@ -30,7 +30,7 @@ In general, we have included a collection of code and data files:
 * ./E4 ASID Example/5min_permute.csv: simulated 5min data (D-5min-HR)
 * ./E4 ASID Example/5min_permute_norm.csv: normalized simulated 5min data
 * ./E4 ASID Example/sleep_tag.csv: the start/end time of sleep of each subject, collected from individuals’ self-reported sleep diaries (This data is used for image plotting)
-* README.md: README file containing instructions on how to run the code
+* ./README.md: README file containing instructions on how to run the code
 
 To reproduce the results, run “reproducibility.R”. Following libraries are needed for running this file:
 

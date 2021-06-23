@@ -1,15 +1,16 @@
-################################ Training: Find the best configuration across CNN layers.
-################### 1-layer CNN
+################################ Training: Find the best configuration across ASID Workflow w/ different number of CNN layers
+################### ASID Workflow w/ 1-layer CNN
 
-## Generate 1-layer CNN configuration table for 5min epoch data w/ HR (D-5min-w.HR).
+## Generate ASID Workflow w/ 1-layer CNN configuration table for simulated 5min epoch data w/ HR (D-5min-HR)
 source("generate_config_table.R")
 
-# metric table should have the same shape as hyperparameter table
-# col name: val_accuracy, val_recall, val_precision, val_AUC, compute_cost
-metric_tb = tibble(configuration=1:nrow(hyper),
+# Create metric table to store results.
+# column name: val_accuracy, val_recall, val_precision, val_AUC, compute_cost
+metric_tb = tibble(configuration=1:nrow(hyper), # metric table should have the same number of rows as hyperparameter table
                    val_accuracy=0,val_recall=0,
                    val_precision=0,val_AUC=0,
                    compute_cost=0)
+
 # Set values for the hyperparameters of the 1-layer CNN model
 for (i in 1:nrow(hyper)){
   # Building the CNN model
@@ -24,7 +25,7 @@ for (i in 1:nrow(hyper)){
     # stepsize
     flag_integer("step_size", hyper$step_size[i]),
     # hr indicator
-    flag_boolean("hr", hyper$hr[i]),
+    flag_boolean("hr", hyper$hr[i]), 
     
     # kernel size: h*w
     flag_integer("kernel_size_h", hyper$kernel_size_h[i]),
@@ -49,9 +50,8 @@ for (i in 1:nrow(hyper)){
     # parameter to the early stopping callback
     flag_integer("patience", 15)
   )
-  ##### reshape data
   
-  # IF THE SAME AS LAST ONE, NOT CHANGE!!!!!!
+  ##### reshape data
   gen_data=gen_split_dt(dt_ready,FLAGS$step_size,var_lst,FLAGS$m,hr=FLAGS$hr)
   
   dt_train=gen_data$dt_train
@@ -86,7 +86,6 @@ for (i in 1:nrow(hyper)){
   # in order to get reproducible result, each time should run set seet first!
   set.seed(FLAGS$seed)
   tensorflow::tf$random$set_seed(FLAGS$seed)
-  #use_session_with_seed(890,disable_gpu = F,disable_parallel_cpu = F)
   
   model1 <-keras_model_sequential()
   #configuring the Model
@@ -125,24 +124,15 @@ for (i in 1:nrow(hyper)){
   metric_tb$val_precision[i] = history1$metrics$val_Precision[maxepoch]
 }
 
-metric_tb %>% write_csv(paste0("metric_",epoch_type[epo],".csv"))  
-
-######### delete later
-# hyper
-# metric_tb = read_csv(paste0("metric_",epoch_type[epo],".csv"))
-# metric_tb
-######### delete later
-
 ######################################################################
 ######################################################################
 ######################################################################
 
-################### 2-layer CNN
-## Generate 2-layer CNN configuration table for 5min epoch data w/ HR (D-5min-w.HR).
+################### ASID Workflow w/ 2-layer CNN
+## Generate ASID Workflow w/ 2-layer CNN configuration table for 5min epoch data w/ HR (D-5min-HR)
 source("generate_config_table_layer2.R")
 hyper2
 
-# metric table should have the same shape as hyperparameter table
 # col name: val_accuracy, val_recall, val_precision, val_AUC, compute_cost
 metric_tb2 = tibble(configuration=1:nrow(hyper2),
                    val_accuracy=0,val_recall=0,
@@ -287,8 +277,6 @@ for (i in 1:nrow(hyper2)){
   metric_tb2$val_recall[i] = history1$metrics$val_Recall[maxepoch]
   metric_tb2$val_precision[i] = history1$metrics$val_Precision[maxepoch]
 }
-
-metric_tb2 %>% write_csv(paste0("metric_",epoch_type[epo],"_layer2_",".csv")) 
 
 
 

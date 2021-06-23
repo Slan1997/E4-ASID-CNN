@@ -50,9 +50,7 @@ To reproduce the results, run “reproducibility.R”. Following libraries are n
 * keras (version 2.2.5.0)
 * tensorflow (version 2.0.0)
 
-The provided code with permuted D-5min-HR will reproduce results similar to Column 5 of Table 2 and Table 4, and cell (1,3) of Table 3. The user can modify variables in the code “generate_config_table.R” at line 16 and 18 to “l = 14” and “hr = FALSE”, to reproduce results similar to Column 6 of Table 2 and Table 4, and cell (2,3) of Table 3. Users will not be able to reproduce results similar to other columns/cells of Table 2-4 because the 1-minute and 30-second simulated data are not provided. 
- 
-A similar figure to Figure 5 can be reproduced by combining "subjectx_seedx.png" and "mv_subjectx_seedx.png", which are plotted by the code “reproducibility.R” at line 190-242.
+The provided code with permuted D-5min-HR will reproduce results similar to Column 5 of Table 2 and Table 4, and cell (1,3) of Table 3. The user can modify variables in the code “generate_config_table.R” at line 14 and 16 to “l = 14” and “hr = FALSE”, and delete HR related features in  “var_lst” in “reproducibility.R” (at line 32), to reproduce results similar to Column 6 of Table 2 and Table 4, and cell (2,3) of Table 3. Users will not be able to reproduce results similar to other columns/cells of Table 2-4 because the 1-minute and 30-second simulated data are not provided. A similar figure to Figure 5 can be reproduced by combining "subjectx_seedx.png" and "mv_subjectx_seedx.png", which are plotted by the code “reproducibility.R” at line 193-245.
 
 Approximate time needed to reproduce the analyses on a standard desktop machine is 10-60 minutes.
 

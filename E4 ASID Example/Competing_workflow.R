@@ -1,15 +1,12 @@
 # when use categorical EDA
-dt_norm <- dt_ready %>% mutate_at(c("sex","eda_cat","sleep"),funs(as.factor))
+dt_norm <- dt_ready %>% mutate_at(c("sex","eda_cat","sleep"),funs(as.factor))  # when use median EDA, replace "eda_cat" by "eda_q2"
 dt_time <- dt_ready %>% select(e4_id,unix_sec)
-
 
 # create dummy varaibles for sex 
 dummies <- dummyVars(sleep ~ ., data = dt_norm)
 dt_dum = data.frame(predict(dummies, newdata = dt_norm))%>%
   mutate(sleep=dt_norm$sleep)
 dt_dum = dt_dum %>% select(ncol(dt_dum),1:ncol(dt_dum)-1)
-
-
 
 # split data for train_val and test
 dt_train =  dt_dum %>% filter(e4_id %in% idx_train_val)
@@ -265,7 +262,6 @@ for(i in 1:50){
 win_size=which.max(diff)
 win_size
 
-# start_day2 = NULL
 for(i in 1:length(idx_test)){
   subject_index = idx_test[i]
   subject_test = dt_test %>% filter(e4_id==subject_index)

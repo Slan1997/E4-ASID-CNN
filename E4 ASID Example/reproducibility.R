@@ -1,5 +1,5 @@
 ## Example with simulated 5min epoch data with Heart Rate (D-5min-HR)
-setwd('~/Desktop/E4 ASID Example/')
+setwd('~/E4-ASID-CNN/E4 ASID Example/')
 library(pacman)
 pacman::p_load(tibble,tidyr, dplyr, readr,lubridate,tfruns,
                rappdirs,scales,caret,magrittr)
@@ -40,6 +40,15 @@ dt_ready = read_csv(paste0(epoch_type[epo],"_permute_norm.csv")) %>%
 
 # Train the ASID workflow
 source("Train_ASID.R")
+
+#### Following results will be generated:
+# metric table for ASID Workflow w/ 1-layer CNN
+metric_tb
+metric_tb %>% write_csv(paste0("metric_",epoch_type[epo],".csv")) 
+
+# metric table for ASID Workflow w/ 2-layer CNN
+metric_tb2
+metric_tb2 %>% write_csv(paste0("metric_",epoch_type[epo],"_layer2_",".csv")) 
 
 ## Summarize training results
 # configs of ASID Workflow (w/ 1-layer CNN) with maximal metrics

@@ -1,21 +1,19 @@
-### Generate 1-layer CNN configuration table for 5min epoch data w HR (D-5min-w.HR).
+### Generate ASID Workflow w/ 1-layer CNN configuration table for 5min epoch data w/ HR (D-5min-HR)
 # For simplicity, hyperparameters combinations used in this example are much less than
 # those used in real experiment.
 
-## For 1-layer CNN
-### generate hyperparameter table for 1-layer cnn
 m_s = c(12)  # should try different m values, for simplicity, only use one value here.
 
-tb_full = NULL
+tb_full = NULL # Create a table to store all the values later.
 
-seed = c(818,7)  # try different initial number for CNN model parameter training.
+seed = c(818,7)  # Try different initial number for CNN model parameter training.
 num_seed=length(seed)
 
 for (i in 1:length(m_s)){
   m = m_s[i]
-  l = 19  # 14 for without HR; 19 for with HR
+  l = 19  # l = 19 for w/ HR, this line should be changed to l = 14 for w/o HR
   step_size = 2 # only use 2 in this example, other possible values can added as alternatives
-  hr = TRUE
+  hr = TRUE  # this line should be changed to hr = FALSE for w/o HR
   
   ## kernel_size = h*w, 
   # if h<w, wide rectangular; if h>w, long rectangular; if h=w, square

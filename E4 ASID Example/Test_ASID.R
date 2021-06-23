@@ -90,7 +90,7 @@ if (hyper_star$conv_layer=="1 layer"){
   )
 }
 
-
+# reshape data under the final best configuration j*
 gen_data=gen_split_dt(dt_ready,FLAGS$step_size,var_lst,FLAGS$m,hr=FLAGS$hr)
 
 dt_train=gen_data$dt_train
@@ -224,7 +224,7 @@ history1 = model1 %>% fit( train_x,train_y ,batch_size=FLAGS$batch_size,
                            epochs=FLAGS$num_epoch)
 
 
-########### tune the window size on training data
+########### tune the window size of Majority voting on the training set
 all_x=abind::abind(train_x,val_x,along = 1)
 all_y=abind::abind(train_y,val_y,along = 1)
 pred_train = model1 %>% predict(all_x,all_y, batch_size = 5)
@@ -272,8 +272,7 @@ for (i in 1:4){
   test_AUC[i] = result$AUC
   test_recall[i] = result$Recall
   test_precision[i] = result$Precision
-  
-  
+ 
   # get real prediction for later plot use
   pred = model1 %>% predict(test_x_lst[[i]],test_y_lst[[i]], batch_size = 5)
   pred_binary = rep(0,length(pred)) # covnert pred to binary 
@@ -290,8 +289,6 @@ for (i in 1:4){
   
   # metrics post majority voting
   mv_test_acc1[i]=mean(mv_pred==test_y) # accuracy 
-  
-
   test_specificity_mv[i] = specificity(conf_matrix_mv, negative = "0") # specificity
   test_recall_mv[i] = sensitivity(conf_matrix_mv, positive = "1") # sensitivity
   test_precision_mv[i] = precision(conf_matrix_mv, relevant = "1") # precision

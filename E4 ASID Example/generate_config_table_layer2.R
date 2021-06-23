@@ -1,11 +1,11 @@
-## Generate 2-layer CNN configuration table for 5min epoch data w/ HR (D-5min-w.HR).
+### Generate ASID Workflow w/ 2-layer CNN configuration table for 5min epoch data w/ HR (D-5min-HR)
 
 ## use mean across seed to decide the best 4 configs from layer1 and pass them to layer 2
 mean_config_tb = train_result_tb(metric_tb,hyper,l=1,num_seed)$best_configs
 hyper_layer1 = mean_config_tb %>% distinct() %>% # use distinct to avoid repeated best_configurations.
   select(m:pool_size_w) # only leave hyperparameters of first convolutional layer
 
-tb_full = NULL
+tb_full = NULL # Create a table to store all the values later.
 seed = c(394,838)  
 num_seed2=length(seed)
 for (i in 1:nrow(hyper_layer1)){
@@ -75,14 +75,12 @@ for (i in 1:nrow(hyper_layer1)){
   # fcl_size should be <=
   # {[l%/%pool_size_h1-(kernel_size_h2-1)] %/% pool_size_h2} * 
   # {[m%/%pool_size_w1-(kernel_size_w2-1)] %/% pool_size_w2 }* num_kernel2
-  
   tb = tb%>% mutate(a1 = l%/%pool_size_h1 - (kernel_size_h2-1),
                     b1 = m%/%pool_size_w1 - (kernel_size_w2-1),
                     a2 = a1 %/% pool_size_h2,
                     b2 = b1 %/% pool_size_w2) %>%
-    filter( ( pool_size_h2 <=  a1) & ( pool_size_w2 <= b1) & 
-              # don't want pool size = 1*1 => meaningless
-              !(pool_size_h2==1&pool_size_w2==1)  ) #&  (fcl_size <= a2*b2*num_kernel2)  ) 
+    filter( ( pool_size_h2 <=  a1) & ( pool_size_w2 <= b1)# don't want pool size = 1*1 => meaningless & 
+             # !(pool_size_h2==1&pool_size_w2==1)  ) #&  (fcl_size <= a2*b2*num_kernel2)  ) 
   tb_full = bind_rows(tb_full,tb)
 }
 # add shape indicator

@@ -1,17 +1,17 @@
-## Example: 5min epoch data without Heart Rate (D-5min-w.o.HR)
+## Example with simulated 5min epoch data with Heart Rate (D-5min-HR)
 setwd('~/Desktop/E4 ASID Example/')
-source("functions.R")
 library(pacman)
 pacman::p_load(tibble,tidyr, dplyr, readr,lubridate,tfruns,
                rappdirs,scales,caret,magrittr)
 
 ### General setup
 epoch_type = c("30s","1min","5min")
-epo = 3  # use epoch_type[epo] to indicate "5min"
+epo = 3  # "use epoch_type[epo]" to indicate "5min"
 epoch = 300 # indicate "5min", unit: sec
+source("functions.R") # load functions
 
-### Create train, validation and test set by randomly sampling.
-# student index for train, validation and test
+### Create train, validation and test set by randomly sampling
+# student index for train, validation and test, this variable will be used in functions of image reshaping (see function.R)
 idx_files=1:25
 # originally, there are 25 students' data, however student 2's data is
 # not qualified for the experiment. So only 24 students' data were used in the experiment.
@@ -22,44 +22,35 @@ idx_val = idx_all[16:20]    ## 5 for validation
 idx_train_val=idx_all[1:20] ## 20 for training and validation
 idx_test = sort(idx_all[21:24])   ## 4 for testing
 
-################### Training
-# Hyperparameter tuning in this example is greatly simplified for both CNN and competing algorithms
+################### Training process of the ASID Workflow
+# Hyperparameter tuning in this example is greatly simplified for both ASID Workflow (CNN) and competing algorithms
 # i.e. less possible values of hyperparameters are tried.
 
-# get variable name list: only consider categorical EDA in this example
+# Get variable name list: only consider categorical EDA in this example; for median EDA, replace "eda_cat" by "eda_q2"
 var_lst = c("e4_id","acc_mean","acc_sd","acc_q1","acc_q2","acc_q3",
             "temp_mean","temp_sd","temp_q1","temp_q2","temp_q3",
-            "hr_mean","hr_sd","hr_q1","hr_q2","hr_q3",
+            "hr_mean","hr_sd","hr_q1","hr_q2","hr_q3",    # under "w/o Heart Rate" scenario, this line should be deleted
             "hourofday","eda_cat","age","sex","sleep" )
+ 
+time = read_csv(paste0(epoch_type[epo],"_permute.csv")) %>% select(unix_sec)  # Get the exact time, will be used later for image plotting.
 
-time = read_csv(paste0(epoch_type[epo],"_permute.csv")) %>% select(unix_sec) 
+# Import normalized D-5min-HR.
 dt_ready = read_csv(paste0(epoch_type[epo],"_permute_norm.csv")) %>%
   select(all_of(var_lst)) %>% bind_cols(time)
-  
+
+# Train the ASID workflow
 source("Train_ASID.R")
 
-######### delete later
-# source("generate_config_table.R")
-# hyper = read_csv(paste0("hyerpara_",epoch_type[epo],".csv"))
-# metric_tb = read_csv(paste0("metric_",epoch_type[epo],".csv"))
-# 
-# source("generate_config_table_layer2.R")
-# hyper2 = read_csv(paste0("hyerpara_",epoch_type[epo],"_layer2.csv"))
-# metric_tb2 = read_csv(paste0("metric_",epoch_type[epo],"_layer2_",".csv"))
-######### delete later
-
-## summarize training results
-# configs of 1-layer CNN with maximal metrics
+## Summarize training results
+# configs of ASID Workflow (w/ 1-layer CNN) with maximal metrics
 max_config_tb = train_result_tb(metric_tb,hyper,l=1,num_seed,summary_type="max")$best_configs
 max_criteria_tb = train_result_tb(metric_tb,hyper,l=1,num_seed,summary_type="max")$metrics
 
-# configs of 2-layer CNN with maximal metrics
+# configs of ASID Workflow (w/ 2-layer CNN) with maximal metrics
 max_config_tb2 = train_result_tb(metric_tb2,hyper2,l=2,num_seed2,summary_type="max")$best_configs
 max_criteria_tb2 = train_result_tb(metric_tb2,hyper2,l=2,num_seed2,summary_type="max")$metrics
 
-
-# combine 1-layer and 2-layer results in one table for both config and metric. 
-# (config_idx may repeat, indicates that this configuration reaches the best result under different evaluation metrics.)
+# reformat "max_config_tb" to be compatible with "max_config_tb2"
 max_config_tb1 = max_config_tb %>% transmute(config_idx,epoch_type,m,l,step_size,hr,
                                     kernel_size_h1=kernel_size_h,kernel_size_w1=kernel_size_w,
                                     kernel_shape1=kernel_shape,num_kernel1=num_kernel,
@@ -69,6 +60,10 @@ max_config_tb1 = max_config_tb %>% transmute(config_idx,epoch_type,m,l,step_size
                                     num_kernel2=NA,pool_size_h2=NA, pool_size_w2=NA,dropout2=NA,
                                     
                                     fcl_size,optimizer,learning_rate,batch_size,num_epoch)
+
+# Combine above results (1-layer & 2-layer) in one table w.r.t both config and metric. 
+# (config_idx may repeat, indicates that this configuration reaches the best result under different evaluation metrics.)
+
 # combined config table
 config_comb =  bind_rows(max_config_tb1%>%mutate(conv_layer="1 layer"),
                          max_config_tb2%>%mutate(conv_layer="2 layers"))
@@ -78,8 +73,7 @@ config_comb
 criteria_comb = bind_rows(max_criteria_tb,max_criteria_tb2)
 criteria_comb
 
-### compare 1-layer vs 2-layer for each metric,
-# and find the final best configuration under each metric
+### compare 1-layer vs 2-layer for each metric and find the final best configuration under each metric
 criteria_final = NULL
 config_final = NULL
 for (k in 1:4){
@@ -101,7 +95,7 @@ out_config = config_final %>% select(-(1:2)) %>%
 out_criteria
 out_config
 
-## find config j* with the maximal AUC for test use.
+## find config j* with the maximal AUC for test use, saved as a csv file.
 hyper_star = out_config %>% slice(4)
 hyper_star %>% write_csv(paste0("hyper_star_",epoch_type[epo],".csv"))
 
@@ -113,7 +107,7 @@ source("Test_ASID.R")
 ## computational cost:
 comp_cost1
 
-## Before Majority Vote Metrics:
+## Before Majority Vote Metrics for 4 test subjects:
 # test accuracy, weighted accuracy, AUC, recall, specificity, precision
 test_acc1
 mean(test_acc1)
@@ -131,7 +125,7 @@ test_precision
 # window size for majority voting
 win_size
 
-# post MV test accuracy, weighted accuracy, recall, specificity, precision
+# post MV test accuracy, weighted accuracy, recall, specificity, precision for 4 test subjects
 # (note AUC was not calculated post majoirty voting)
 mv_test_acc1
 mean(mv_test_acc1)
@@ -185,7 +179,7 @@ tb_plot = tb_plot %>%
   mutate_each_(funs(factor(.)),cols)
 str(tb_plot)
 
-tags = read_csv("sleep_tag.csv")
+tags = read_csv("sleep_tag.csv") # get sleep tags
 
 for (a in 1:4){
   idx_sub = idx_test[a]

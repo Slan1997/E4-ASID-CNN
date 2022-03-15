@@ -1,5 +1,5 @@
 # when use categorical EDA
-dt_norm <- dt_ready %>% mutate_at(c("sex","eda_cat","sleep"),funs(as.factor))  # when use median EDA, replace "eda_cat" by "eda_q2"
+dt_norm <- dt_ready %>% mutate_at(c("sex","eda_cat","sleep"),funs(as.factor))  # when use median EDA, delete "eda_cat"
 dt_time <- dt_ready %>% select(e4_id,unix_sec)
 
 # create dummy varaibles for sex 
@@ -238,7 +238,7 @@ result_svmr[5,1]="mean"
 seed = 613 # tried 10 seeds in original experiment
 grid = expand.grid(mtry = c(3:4))   
 set.seed(seed)
-RFModel =caret::train(sleep~., data = dt_train,method = "rf",
+RFModel =caret::train(f, data = dt_train,method = "rf",
                 trControl= TrainingParameters,
                 tuneGrid = grid, na.action = na.omit)
 

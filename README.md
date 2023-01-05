@@ -21,10 +21,10 @@ This folder includes files and data necessary to run and reproduce the results o
 In general, we have included a collection of code and data files:
 * ./E4 ASID Example/reproducibility.R: general script to reproduce the results, it will source the following files
 * ./E4 ASID Example/functions.R: all functions needed for the experiment
-* ./E4 ASID Example/Train_ASID.R: ASID Workflow’s training process, sourcing following files:
-  ** ./E4 ASID Example/variable_order_rf.R: get the alignment of modalities and order for tunning
-  ** ./E4 ASID Example/generate_config_table.R: generate 1-layer CNN configuration table
-  ** ./E4 ASID Example/generate_config_table_layer2.R: generate 2-layer CNN configuration table
+* ./E4 ASID Example/Train_ASID.R: ASID Workflow’s training process, sourcing following 3 files:
+* 1) ./E4 ASID Example/variable_order_rf.R: get the alignment of modalities and order for tunning 
+* 2) ./E4 ASID Example/generate_config_table.R: generate 1-layer CNN configuration table
+* 3) ./E4 ASID Example/generate_config_table_layer2.R: generate 2-layer CNN configuration table
 * ./E4 ASID Example/Test_ASID.R: ASID Workflow’s testing process
 * ./E4 ASID Example/5min_permute.csv: simulated 5min data (D-5min-HR)
 * ./E4 ASID Example/5min_permute_norm.csv: normalized simulated 5min data

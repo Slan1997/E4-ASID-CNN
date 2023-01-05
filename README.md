@@ -27,7 +27,7 @@ In general, we have included a collection of code and data files:
 * ./E4 ASID Example/Test_ASID.R: ASID Workflow’s testing process
 * ./E4 ASID Example/5min_permute.csv: simulated 5min data (D-5min-HR)
 * ./E4 ASID Example/5min_permute_norm.csv: normalized simulated 5min data
-* ./E4 ASID Example/sleep_tag.csv: the start/end time of sleep of each subject, collected from individuals’ self-reported sleep diaries (This data is used for image plotting)
+* ./E4 ASID Example/sleep_tag.csv: the start/end time of sleep of each subject, collected from individuals’ self-reported sleep diaries (This data can be used for image plotting)
 
 Codes for competing workflows are uploaded to the repository but not run in this example.
 * ./E4 ASID Example/Competing_workflow.R: Competing Workflow’s training and testing processes (except LSTM)

@@ -90,7 +90,7 @@ for (i in 1:nrow(hyper)){
   #print(idx_val)
   
   ##### reshape data
-  gen_data=gen_split_dt(dt_ready,FLAGS$step_size,var_lst,FLAGS$m) # use hr=T here, actually var_lst already consider hr scenario
+  gen_data=gen_split_dt(dt_ready,FLAGS$step_size,var_lst,FLAGS$m) 
   
   dt_train=gen_data$dt_train
   dt_val=gen_data$dt_val
